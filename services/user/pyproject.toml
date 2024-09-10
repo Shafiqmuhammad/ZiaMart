@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "user"
+version = "0.1.0"
+description = "User service for ZiaMart"
+authors = ["Your Name"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.114.0"
+uvicorn = "^0.30.6"
+pytest = "^8.3.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

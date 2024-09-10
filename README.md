@@ -114,3 +114,14 @@ ZiaMart/
 
 ```
 
+### Step 9: Set Up the Project Structure
+Navigate to the ZiaMart folder and create the structure for the service/user
+- Add FastAPI and Other Dependencies Using Poetry
+Navigate to the user folder and add dependencies via Poetry:
+```
+cd services/user_service
+poetry init --name "user" --description "User service for ZiaMart" --author "Your Name" --python "^3.8" --dependency fastapi --dependency uvicorn --dependency pytest
+```
+
+
+
