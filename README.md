@@ -2,7 +2,7 @@
 ![alt text](image.png)
 
 ## Overview
-- An architecture diagram for "Zia Mart Online." Here's a breakdown based on the image:
+An architecture diagram for "Zia Mart Online." Here's a breakdown based on the image:
 
 - Customer: The end user of the platform, interacting with the services through the Kong Gateway.
 
