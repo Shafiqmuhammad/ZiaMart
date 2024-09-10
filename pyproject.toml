@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ziamart"
+version = "0.1.0"
+description = ""
+authors = ["Shafiqmuhammad <115002187+Shafiqmuhammad@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.114.0"
+uvicorn = "^0.30.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
