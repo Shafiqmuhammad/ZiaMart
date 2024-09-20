@@ -1,5 +1,5 @@
 "# ZiaMart" 
-![alt text](image.png)
+![image](https://github.com/user-attachments/assets/c837c6b9-9ecd-4f5a-8d67-bcf6f64a221b)
 
 ## Overview
 An architecture diagram for "Zia Mart Online." Here's a breakdown based on the image:
@@ -24,104 +24,57 @@ An architecture diagram for "Zia Mart Online." Here's a breakdown based on the i
 
 The overall architecture follows a microservices pattern with an API Gateway (Kong) and event-driven communication (Kafka and Dapr). It looks like you're building an event-driven microservices architecture with good modularity and scalability.
 
-## Deploy Kong with PostgreSQL
+## Structure of Users Service 
+complete updated structure for the services/users/ microservice with Kafka, Protobuf, PostgreSQL, FastAPI, and Docker. The files will now include Protobuf for Kafka message serialization.
 
-### Step 1: Create a Docker network
+services/users/
+├── Dockerfile
+├── pyproject.toml                    # Poetry dependency management file
+├── poetry.lock                       # Lock file for dependencies
+├── app/
+│   ├── main.py                       # FastAPI application entry point
+│   ├── routes/                       # API route definitions
+│   │   └── user_routes.py            # Example route for user endpoints
+│   ├── models/                       # Pydantic and SQLAlchemy models
+│   │   └── user.py                   # User ORM and Pydantic models
+│   ├── services/                     # Business logic for the microservice
+│   │   └── user_service.py           # Example service handling user-related logic
+│   ├── repositories/                 # Database interaction code
+│   │   └── user_repository.py        # Example repository for user DB operations
+│   ├── events/                       # Kafka producers/consumers
+│   │   └── user_events.py            # Kafka event handling for users
+│   ├── protobuf/                     # Generated Protobuf code
+│   │   └── user_pb2.py               # Generated Protobuf file for user messages
+│   └── config/                       # Configurations (PostgreSQL, etc.)
+│       └── settings.py               # Application settings (DB connection, Kafka brokers)
+├── tests/                            # Unit and integration tests
+│   └── test_user_service.py          # Tests for the service layer
+└── config/                           # Env and config files
+    └── env/
+        └── dev.env                   # Environment variables for local development
 
-```bash
-docker network create kong-net
+
+### Step 1: Create a users service 
 ```
-
-### Step 2: Start the PostgreSQL DB container
-
-```bash
-docker run -d --name kong-database --network=kong-net -p 5432:5432 -e "POSTGRES_USER=kong" -e "POSTGRES_DB=kong" -e "POSTGRES_PASSWORD=kong" postgres:latest
+poetry new users
 ```
+### Step 2: Create a Dockerfile
 
-### Step 3: Run Kong migrations on the PostgreSQL DB
+### Step 3: Update toml file 
 
-```bash
-docker run --rm --network=kong-net -e "KONG_DATABASE=postgres" -e "KONG_PG_HOST=kong-database" -e "KONG_PG_PASSWORD=kong" kong:latest kong migrations bootstrap
-```
+### Step 4: Create file users/user/main.py
 
-### Step 4: Start the Kong container 
-
-```bash
-docker run -d --name kong --network=kong-net -e "KONG_DATABASE=postgres" -e "KONG_PG_HOST=kong-database" -e "KONG_PG_PASSWORD=kong" -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" -e "KONG_PROXY_ERROR_LOG=/dev/stderr" -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" -e "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl" -p 8000:8000 -p 8001:8001 -p 8002:8002 -p 8443:8443 -p 8444:8444 kong:latest
-```
-
-### Verify Kong is running
-
-http://localhost:8000/
+### Step 5: create file routes 
+users/routes/user_routes.py
 
 
-This should return the Kong admin API response, indicating that the Kong container is up and running and connected to the PostgreSQL database.
-
-### Open Kong UI in browser and verify Kong admin dashboard is up and running
-
-http://localhost:8002/
-
-### Step 5: Here’s the same setup but using a single Docker Compose file to deploy Kong with PostgreSQL
-
-docker-compose.yaml
+### Step 6: create a model/user file 
+users/models/user.py
 
 
-run this command to start the containers
-```
-docker-compose up -d
-```
 
-### Step 6: Here's a step-by-step guide to initialize my project in the ZiaMart folder, set up a service using FastAPI, and manage dependencies with Poetry:
 
-First, ensure you have Poetry installed. If not, you can install it using the following command:
-```
-pip install poetry
-```
 
-Now, initialize a Poetry project in my ZiaMart folder:
-```
-poetry init
-```
-
-#### Add FastAPI as a Dependency.
-    In the same directory, add FastAPI to your project using Poetry:
-
-Add Uvicorn (ASGI Server) to Run the FastAPI App
-```
-poetry add uvicorn
-```
-
-### Step 7 Step 5: Create a Service Folder and Add First Service
-Now, create a folder for your my service, let's call it user:
-
-```
-mkdir services
-cd services
-mkdir user
-cd user
-```
-
-### Step 8: Folder Structure:
-
-```
-ZiaMart/
-│
-├── pyproject.toml        # Poetry's project configuration file
-├── poetry.lock           # Poetry's lock file for dependencies
-└── services/
-    └── user/
-        └── main.py       # FastAPI service code
-
-```
-
-### Step 9: Set Up the Project Structure
-Navigate to the ZiaMart folder and create the structure for the service/user
-- Add FastAPI and Other Dependencies Using Poetry
-Navigate to the user folder and add dependencies via Poetry:
-```
-cd services/user_service
-poetry init --name "user" --description "User service for ZiaMart" --author "Your Name" --python "^3.8" --dependency fastapi --dependency uvicorn --dependency pytest
-```
 
 
 
