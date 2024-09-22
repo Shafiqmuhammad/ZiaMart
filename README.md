@@ -66,6 +66,7 @@ poetry new users
 ### Step 4: Create file users/user/main.py
 
 ### Step 5: create file routes 
+This is my Protobuf schema file. After writing this file, generate the corresponding Python classes using the protoc command.
 users/routes/user_routes.py
 
 
