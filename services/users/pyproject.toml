@@ -2,18 +2,19 @@
 [tool.poetry]
 name = "users"
 version = "0.1.0"
-description = ""
+description = "User microservice for Zia Mart Online"
 authors = ["Shafiqmuhammad <115002187+Shafiqmuhammad@users.noreply.github.com>"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = "^0.95.0"
 uvicorn = "^0.22.0"
-sqlalchemy = "^1.4.0"
-asyncpg = "^0.24.0"
-confluent-kafka = "^1.9.0"  # Kafka dependency
-protobuf = "^4.0.0"         # Protobuf for message serialization
+sqlalchemy = "^2.0.0"
+asyncpg = "^0.27.0"
+alembic = "^1.8.0"
+pydantic = "^2.0.0"
+confluent-kafka = "^1.9.0"   # Correct Kafka library
+protobuf = "^4.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.0"

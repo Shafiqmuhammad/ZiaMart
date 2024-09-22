@@ -91,37 +91,109 @@ Add Uvicorn (ASGI Server) to Run the FastAPI App
 poetry add uvicorn
 ```
 
-### Step 7 Step 5: Create a Service Folder and Add First Service
+### Step 7: Create a Service Folder and Add First Service
 Now, create a folder for your my service, let's call it user:
 
 ```
-mkdir services
-cd services
-mkdir user
-cd user
+poetry add user
 ```
 
-### Step 8: Folder Structure:
+```
+poetry add fastapi uvicorn
+```
+
+### Step 8: Updated File Structure with Kafka Producer and Consumer
+
+To add Kafka producer and consumer functionality in your services, we can modify the file structure and add the necessary code for Kafka integration. This will enable each microservice to communicate asynchronously using Kafka for event-driven communication.
+
+
 
 ```
 ZiaMart/
 │
-├── pyproject.toml        # Poetry's project configuration file
-├── poetry.lock           # Poetry's lock file for dependencies
-└── services/
-    └── user/
-        └── main.py       # FastAPI service code
+├── docker-compose.yml           # Docker Compose file to manage microservices and Kafka
+│
+├── user/                       # Users microservice
+│   ├── app/
+│   │   ├── main.py              # FastAPI entry point for Users service
+│   │   └── kafka_utils.py       # Kafka Producer and Consumer utilities
+│   ├── pyproject.toml           # Poetry configuration for dependencies
+│   ├── Dockerfile               # Dockerfile for Users service
+│   └── README.md                # Documentation for Users service
+│
+├── product/                     # Product microservice
+│   ├── app/
+│   │   ├── main.py              # FastAPI entry point for Product service
+│   │   └── kafka_utils.py       # Kafka Producer and Consumer utilities
+│   ├── pyproject.toml           # Poetry configuration for dependencies
+│   ├── Dockerfile               # Dockerfile for Product service
+│   └── README.md                # Documentation for Product service
+│
+├── order/                       # Order microservice
+│   ├── app/
+│   │   ├── main.py              # FastAPI entry point for Order service
+│   │   └── kafka_utils.py       # Kafka Producer and Consumer utilities
+│   ├── pyproject.toml           # Poetry configuration for dependencies
+│   ├── Dockerfile               # Dockerfile for Order service
+│   └── README.md                # Documentation for Order service
+│
+├── inventory/                   # Inventory microservice
+│   ├── app/
+│   │   ├── main.py              # FastAPI entry point for Inventory service
+│   │   └── kafka_utils.py       # Kafka Producer and Consumer utilities
+│   ├── pyproject.toml           # Poetry configuration for dependencies
+│   ├── Dockerfile               # Dockerfile for Inventory service
+│   └── README.md                # Documentation for Inventory service
+│
+├── notification/                # Notification microservice
+│   ├── app/
+│   │   ├── main.py              # FastAPI entry point for Notification service
+│   │   └── kafka_utils.py       # Kafka Producer and Consumer utilities
+│   ├── pyproject.toml           # Poetry configuration for dependencies
+│   ├── Dockerfile               # Dockerfile for Notification service
+│   └── README.md                # Documentation for Notification service
+│
+├── payment/                     # Payment microservice
+│   ├── app/
+│   │   ├── main.py              # FastAPI entry point for Payment service
+│   │   └── kafka_utils.py       # Kafka Producer and Consumer utilities
+│   ├── pyproject.toml           # Poetry configuration for dependencies
+│   ├── Dockerfile               # Dockerfile for Payment service
+│   └── README.md                # Documentation for Payment service
+│
+└── kafka/
+    ├── docker-compose.yml       # Docker Compose file to set up Kafka
+    └── README.md                # Documentation for Kafka setup
+
 
 ```
+### Step 1: Install Kafka Dependencies in Each Microservice
+In each service, install the confluent-kafka package, which provides producer and consumer functionality.
 
-### Step 9: Set Up the Project Structure
-Navigate to the ZiaMart folder and create the structure for the service/user
-- Add FastAPI and Other Dependencies Using Poetry
-Navigate to the user folder and add dependencies via Poetry:
+ in the User microservice:
+
 ```
-cd services/user_service
-poetry init --name "user" --description "User service for ZiaMart" --author "Your Name" --python "^3.8" --dependency fastapi --dependency uvicorn --dependency pytest
+cd users
+poetry add confluent-kafka
+```
+#### Create Kafka Utilities (kafka_utils.py)
+Each service will need Kafka producers and consumers. We can create a helper module (kafka_utils.py) to handle producing and consuming messages.
+
+Example for Users service (users/app/kafka_utils.py):
+
+#### Set Up Kafka with Docker Compose
+In my ZiaMartOnline root folder, modify the docker-compose.yml file to include Kafka. This setup will also include Zookeeper, which Kafka requires to function properly.
+
+Add Kafka and Zookeeper to docker-compose.yml:
+
+#### Build and Run Everything
+Now that you've configured each service to use Kafka and set up Kafka in Docker Compose, you can build and run everything.
+
+From the ZiaMartOnline root directory, run:
+
+```
+docker-compose up --build
 ```
 
-
-
+#### Dockerfile.dev for FastAPI Services
+ Dockerfile.dev might look like for one of your microservices (e.g., users).
