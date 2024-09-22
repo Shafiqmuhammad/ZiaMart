@@ -74,6 +74,15 @@ users/models/user.py
 
 
 
+### Protobuf for Kafka Serialization
+You can continue using Protobuf to serialize and deserialize messages in Kafka. Here’s how you can use Protobuf in your Kafka producers and consumers.
+
+Producer (in app/events/user_events.py)
+
+Consumer (in app/kafka_utils.py)
+
+
+
 
 
 
