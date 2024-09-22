@@ -81,7 +81,7 @@ Producer (in app/events/user_events.py)
 
 Consumer (in app/kafka_utils.py)
 
-
+- **Protobuf Serialization:** Both producer and consumer use Protobuf for serializing and deserializing messages sent through Kafka
 
 
 
