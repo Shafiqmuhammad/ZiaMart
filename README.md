@@ -2,7 +2,7 @@
 ![image](https://github.com/user-attachments/assets/c837c6b9-9ecd-4f5a-8d67-bcf6f64a221b)
 
 ## Overview
-An architecture diagram for "Zia Mart Online." Here's a breakdown based on the image:
+An architecture diagram for "Zia Mart" Here's a breakdown based on the image:
 
 - Customer: The end user of the platform, interacting with the services through the Kong Gateway.
 
@@ -75,11 +75,14 @@ users/routes/user_routes.py
 
 ### Step 8: create a file users/repositories/user_repository.py 
 
-### Step 9: create a file users/events/user_events.py 
+### Step 9: create a file users/prouducer/user_events.py 
 
-### Step : 
+### Step 10: create a file users/consumer/kafka_utils.py
 
-### Step : 
+### Step 11: create a file users/protobuf/user.proto
+```
+protoc --proto_path=. --python_out=. user.proto
+```
 
 ### Step : 
 
