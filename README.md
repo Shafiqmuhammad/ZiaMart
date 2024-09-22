@@ -73,9 +73,9 @@ users/routes/user_routes.py
 
 ### Step 7: create a file users/services/user_service.py 
 
-### Step : 
+### Step 8: create a file users/repositories/user_repository.py 
 
-### Step : 
+### Step 9: create a file users/events/user_events.py 
 
 ### Step : 
 
