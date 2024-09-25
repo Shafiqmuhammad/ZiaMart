@@ -1,21 +1,30 @@
-
 [tool.poetry]
-name = "users"
+name = "ziamart"
 version = "0.1.0"
-description = "User microservice for Zia Mart Online"
-authors = ["Shafiqmuhammad <115002187+Shafiqmuhammad@users.noreply.github.com>"]
+description = "Zia Mart User Service"
+authors = ["shafiq00786@hotmai.com"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.95.0"
+fastapi = "^0.95.0"               # Using FastAPI 0.95.x
+pydantic = ">=1.6.2,<2.0.0"       # Pydantic 1.x (compatible with FastAPI 0.95.x)
 uvicorn = "^0.22.0"
-sqlalchemy = "^2.0.0"
-asyncpg = "^0.27.0"
-alembic = "^1.8.0"
-pydantic = "^2.0.0"
-confluent-kafka = "^1.9.0"   # Correct Kafka library
-protobuf = "^4.0.0"
+sqlalchemy = "^2.0.35"             # SQLAlchemy for database interaction
+asyncpg = "^0.24.0"               # Async PostgreSQL driver
+confluent-kafka = "^1.9.0"        # Kafka client for Python
+protobuf = "^4.0.0"               # Protobuf for message serialization
+sqlmodel = "^0.0.22"
+aiokafka = "^0.11.0"
+python-jose = "^3.3.0"
+psycopg = "^3.2.2"
+passlib = "^1.7.4"
+python-multipart = "^0.0.10"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.0"
-httpx = "^0.24.0"
+httpx = "^0.24.0"                 # HTTP client for testing
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

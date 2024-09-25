@@ -1,0 +1,79 @@
+version: '3.7'
+
+services:
+  # 01 - User Service
+  user:
+    container_name: "user"
+    hostname: "user"
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - broker
+      - postgres_db_user
+    ports:
+      - "8003:8003"  # Expose container port 8003 to host port 8003
+    volumes:
+      - ./services/users:/code/  # Map the local directory to the container for live updates
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: "broker:9092"
+      PROTOBUF_SCHEMA_PATH: "/code/protobuf"  # Set Protobuf schema path for the app
+
+  # 02 - Kafka Broker (KRaft Mode, without Zookeeper)
+  broker:
+    image: apache/kafka:3.7.0
+    container_name: "broker"
+    hostname: "broker"
+    ports:
+      - "9092:9092"  # Expose Kafka on port 9092
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENERS: "CONTROLLER://:29093,PLAINTEXT_HOST://0.0.0.0:9092,PLAINTEXT://:19092"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT_HOST://localhost:9092,PLAINTEXT://broker:19092"
+      KAFKA_PROCESS_ROLES: "broker,controller"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@broker:29093"
+      CLUSTER_ID: "4L6g3nShT-eMCtK--X86sw"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
+
+  # 03 - Kafka UI (Optional for visualization)
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: "kafka-ui"
+    ports:
+      - "8080:8080"  # Expose Kafka UI on port 8080
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "Local Kafka Cluster"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "broker:19092"
+      DYNAMIC_CONFIG_ENABLED: "true"
+    depends_on:
+      - broker
+
+  # 04 - PostgreSQL Database for User Service
+  postgres_db_user:
+    image: postgres:latest
+    container_name: "postgres_db_user"
+    restart: always
+    environment:
+      POSTGRES_USER: "shafiq"
+      POSTGRES_PASSWORD: "shafiq_password"
+      POSTGRES_DB: "shafiq_database_user"
+    ports:
+      - "5436:5432"  # Map PostgreSQL to port 5436 on the host
+    volumes:
+      - postgres_db_user_data:/var/lib/postgresql/data  # Persist data in a volume
+
+volumes:
+  # Volume for persisting PostgreSQL data
+  postgres_db_user_data:
+    driver: local
+
+networks:
+  default:
+    driver: bridge

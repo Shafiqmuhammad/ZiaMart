@@ -15,6 +15,20 @@ asyncpg = "^0.24.0"
 confluent-kafka = "^1.9.0"  # Kafka dependency
 protobuf = "^4.0.0"         # Protobuf for message serialization
 
+sqlmodel = "^0.0.18"
+psycopg = {extras = ["binary"], version = "^3.1.19"}
+protobuf = "^5.27.0"
+aiokafka = "^0.10.0"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+pydantic = "^2.8.2"
+python-multipart = "^0.0.9"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.0"
 httpx = "^0.24.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
